@@ -13,6 +13,9 @@ These files are context for the team of agents that will build the app. Read the
 | 3 | [03-dataset.md](03-dataset.md) | Recommended dataset (Rotten Tomatoes critic reviews, Kaggle, CC0), schema, caveats, alternatives |
 | 4 | [04-netlify-deployment.md](04-netlify-deployment.md) | What Netlify can/can't run (build Python, Functions, Edge, Pyodide) and the recommended architecture + JSON contract |
 | 5 | [expert-roster.md](expert-roster.md) | The 12 expert agents (incl. Orchestrator, Meta, NLTK and spaCy experts), one-line jobs, hand-offs, and the shared-skills matrix |
+| 6 | [agent-brains.md](agent-brains.md) | Each agent's name, personality and model (opus/sonnet/haiku) with reasons; tools; changelog |
+
+The agents themselves are in `.claude/agents/`, their skills in `.claude/skills/`, and their reference notes in `knowledge/`. See `CLAUDE.md` at the repo root.
 
 **Decision (final):** everything runs on Netlify, with no outside servers. NLTK and spaCy run over the dataset at build time and write static files. NLTK also runs live in the browser via Pyodide for "Analyze your own review".
 
