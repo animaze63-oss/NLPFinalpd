@@ -46,3 +46,4 @@ Rules of thumb for this team:
 | Date | Change | By |
 |---|---|---|
 | 2026-11-27 | Created 12 agents, 37 skills, 12 knowledge folders from official docs | initial build |
+| 2026-11-28 | Build phase: app built end to end (data sample, NLTK + spaCy pipeline, contract 1.0, dashboard, Pyodide analyzer, netlify.toml, tests). The Orchestrator ran without the `Agent` tool (spawn depth limit), so it executed each expert's brief in role using that expert's knowledge folder. Retro item for META: when the Orchestrator itself runs as a subagent, either raise `CLAUDE_CODE_MAX_SUBAGENT_SPAWN_DEPTH` or start the Orchestrator from the main conversation so it can delegate. | orchestrator |
