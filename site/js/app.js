@@ -118,14 +118,54 @@ function filmCard(f) {
       badge("data"), ` Tomatometer ${f.tomatometer ?? "n/a"}%  `, badge("nltk"), " VADER ",
       el("span", { class: `score ${sentClass(f.mean_compound)}` }, fmt(f.mean_compound)),
     ]),
+    el("p", { class: "meta" }, [badge("combo"), " Aspect scores"]),
     chips,
     el("p", { class: "meta" }, `${f.n_reviews} reviews`),
   ]);
 }
 
+// Aspect colours for spaCy charts (each has >= 3:1 contrast on both theme backgrounds).
+const ASPECT_COLOR = { visuals: "#1f8fd6", story: "#8a63d2", characters: "#d97706", soundtrack: "#2a9d5c" };
+
+function spacyOverviewPanel() {
+  const rows = films.films.map((f) => [f.title, ...ASPECTS.map((a) => String(f.aspect_mentions?.[a] ?? 0))]);
+  return panel({
+    id: "spacy-overview", title: "What reviewers talk about: aspect mentions found by spaCy", source: "spacy", span: "span-6",
+    how: "For each film, the number of review sentences where spaCy found a visuals, story, characters or soundtrack aspect (lemmas, noun chunks, phrase matches and dependency links).",
+    body: [el("div", { class: "chart-box xtall" }, el("canvas", { id: "spacy-overview-chart", role: "img", "aria-label": "Stacked bar chart of aspect mentions found by spaCy for each film; the data table below lists the values." })),
+      dataTable("Data table: aspect mentions per film (spaCy)", ["Film", ...ASPECTS.map((a) => ASPECT_LABEL[a])], rows)],
+  });
+}
+
+function heatCell(v, n) {
+  if (v == null || !n) return el("td", { class: "heat na" }, "n/a");
+  const pct = Math.round(10 + Math.min(1, Math.abs(v)) * 30);
+  const tone = v >= 0.05 ? "--pos" : v <= -0.05 ? "--neg" : "--neu";
+  return el("td", { class: "heat", style: `background: color-mix(in srgb, var(${tone}) ${pct}%, transparent)` },
+    [el("span", { class: "heat-v" }, `${v >= 0.05 ? "▲" : v <= -0.05 ? "▼" : "●"} ${fmt(v)}`), el("span", { class: "heat-n" }, ` ${n}×`)]);
+}
+
+function comboHeatmapPanel() {
+  const head = el("tr", {}, [el("th", { scope: "col" }, "Film"), ...ASPECTS.map((a) => el("th", { scope: "col" }, ASPECT_LABEL[a]))]);
+  const body = films.films.map((f) => el("tr", {}, [
+    el("th", { scope: "row" }, el("a", { href: `/film/${f.slug}` }, f.title)),
+    ...ASPECTS.map((a) => heatCell(f.aspects?.[a], f.aspect_mentions?.[a])),
+  ]));
+  const table = el("table", { class: "heatmap" }, [
+    el("caption", { class: "visually-hidden" }, "Mean NLTK VADER score of the sentences where spaCy found each aspect, per film; n× is the number of sentences."),
+    el("thead", {}, head), el("tbody", {}, body)]);
+  return panel({
+    id: "combo-heatmap", title: "Aspect sentiment heatmap: praised ▲ or criticised ▼", source: "combo", span: "span-6",
+    how: "spaCy finds the sentences about each aspect; NLTK VADER scores them. Each cell is the mean score (−1 to +1) with the number of sentences. Stronger colour means a stronger opinion.",
+    body: el("div", { class: "table-scroll", tabindex: "0", role: "region", "aria-label": "Aspect sentiment heatmap" }, table),
+  });
+}
+
 function overviewPanel() {
   const rows = films.films.map((f) => [f.title, `${f.tomatometer ?? "n/a"}%`, fmt(f.mean_compound)]);
   return el("div", { class: "grid", style: "margin-top:1.6rem" }, [
+    spacyOverviewPanel(),
+    comboHeatmapPanel(),
     panel({
       id: "overview", title: "All films: Tomatometer vs average VADER score", source: "nltk",
       how: "Each dot is a film. Horizontal: share of Fresh reviews on Rotten Tomatoes (dataset). Vertical: mean NLTK VADER compound score of the reviews in our sample (-1 to +1).",
@@ -138,6 +178,16 @@ function overviewPanel() {
 function drawOverviewChart() {
   if (!window.Chart) return;
   const c = themeColors();
+  const axis0 = { ticks: { color: c.muted }, grid: { color: c.grid } };
+  charts.push(new window.Chart(document.getElementById("spacy-overview-chart"), {
+    type: "bar",
+    data: { labels: films.films.map((f) => f.title),
+      datasets: ASPECTS.map((a) => ({ label: ASPECT_LABEL[a], data: films.films.map((f) => f.aspect_mentions?.[a] ?? 0), backgroundColor: ASPECT_COLOR[a] })) },
+    options: { indexAxis: "y", maintainAspectRatio: false, animation: false,
+      plugins: { legend: { labels: { color: c.text } } },
+      scales: { x: { ...axis0, stacked: true, beginAtZero: true, title: { display: true, text: "Sentences mentioning the aspect (spaCy)", color: c.text } },
+        y: { ...axis0, stacked: true, ticks: { color: c.text, autoSkip: false } } } },
+  }));
   const ctx = document.getElementById("overview-chart");
   charts.push(new window.Chart(ctx, {
     type: "scatter",
@@ -301,10 +351,13 @@ function chunksPanel(f) {
     const xs = withA.filter((c) => c.aspect === a).slice(0, 6);
     return xs.length ? el("div", { class: "ent-group" }, [el("h3", {}, ASPECT_LABEL[a]), el("ul", { class: "chips" }, xs.map((c) => el("li", { class: "chip" }, `${c.phrase} ×${c.count}`)))]) : null;
   });
+  const top = f.noun_chunks.slice(0, 10);
+  const chart = top.length ? [el("div", { class: "chart-box" }, el("canvas", { id: "chunks-chart", role: "img", "aria-label": "Bar chart of the most frequent noun chunks found by spaCy, coloured by aspect; the data table below lists the values." })),
+    dataTable("Data table: top noun chunks (spaCy)", ["Noun chunk", "Aspect", "Count"], top.map((c) => [c.phrase, c.aspect ? ASPECT_LABEL[c.aspect] : "other", String(c.count)]))] : [];
   return panel({
     id: "chunks", title: "Noun-chunk aspects", source: "spacy", span: "span-6",
     how: "spaCy noun chunks (determiners and stopwords removed, head noun lemmatised), mapped to an aspect when the chunk contains a lexicon phrase or its head lemma is an aspect trigger.",
-    body: [...groups, other.length ? el("div", { class: "ent-group" }, [el("h3", {}, "Other frequent topics"), el("ul", { class: "chips" }, other.slice(0, 10).map((c) => el("li", { class: "chip" }, `${c.phrase} ×${c.count}`)))]) : null],
+    body: [...chart, ...groups, other.length ? el("div", { class: "ent-group" }, [el("h3", {}, "Other frequent topics"), el("ul", { class: "chips" }, other.slice(0, 10).map((c) => el("li", { class: "chip" }, `${c.phrase} ×${c.count}`)))]) : null],
   });
 }
 
@@ -316,14 +369,17 @@ function entitiesPanel(f) {
   const by = {};
   for (const e of f.entities) (by[e.label] ||= []).push(e);
   const order = Object.keys(ENT_LABELS).filter((k) => by[k]).concat(Object.keys(by).filter((k) => !ENT_LABELS[k]));
+  const topEnts = [...f.entities].sort((a, b) => b.count - a.count).slice(0, 10);
+  const chart = topEnts.length ? [el("div", { class: "chart-box" }, el("canvas", { id: "entities-chart", role: "img", "aria-label": "Bar chart of the most mentioned named entities found by spaCy; the data table below lists the values." })),
+    dataTable("Data table: top named entities (spaCy)", ["Entity", "Label", "Found by", "Count"], topEnts.map((e) => [e.text, e.label, e.source === "ruler" ? "EntityRuler" : "model", String(e.count)]))] : [];
   return panel({
     id: "entities", title: "Named entities: people, films, studios, franchises, tech", source: "spacy", span: "span-6",
-    how: "spaCy en_core_web_sm NER plus an EntityRuler placed before it. Dashed chips come from the EntityRuler (patterns seeded from this dataset's directors, cast and titles, plus curated STUDIO, FRANCHISE and FILM_TECH lists); solid chips come from the statistical model.",
-    body: order.length ? order.map((k) => el("div", { class: "ent-group" }, [
+    how: "spaCy en_core_web_sm NER plus an EntityRuler placed before it. Dashed chips come from the EntityRuler (patterns seeded from this dataset's directors, cast and titles, plus curated STUDIO, FRANCHISE and FILM_TECH lists); solid chips come from the statistical model. In the chart, blue bars were found by the EntityRuler and purple bars by the statistical model.",
+    body: order.length ? [...chart, ...order.map((k) => el("div", { class: "ent-group" }, [
       el("h3", {}, `${ENT_LABELS[k] || k} (${k})`),
       el("ul", { class: "chips" }, by[k].slice(0, 10).map((e) => el("li", { class: `chip ${e.source === "ruler" ? "ruler" : ""}` }, [
         e.text, el("span", { class: "src" }, ` ×${e.count} · ${e.source === "ruler" ? "EntityRuler" : "model"}`)]))),
-    ])) : el("p", { class: "muted" }, "No entities found."),
+    ]))] : el("p", { class: "muted" }, "No entities found."),
   });
 }
 
@@ -349,6 +405,20 @@ function drawFilmCharts(f) {
       datasets: [{ label: "Mean VADER of aspect sentences", data: av.map((v) => v ?? 0), backgroundColor: av.map(colorFor), borderRadius: 6 }] },
     options: { indexAxis: "y", maintainAspectRatio: false, animation: false, plugins: { legend: { display: false } },
       scales: { x: { ...axis, min: -1, max: 1, title: { display: true, text: "◀ criticised   mean VADER compound   praised ▶", color: c.text } }, y: { ...axis, ticks: { color: c.text } } } },
+  }));
+  const top = f.noun_chunks.slice(0, 10);
+  if (top.length) charts.push(new window.Chart(document.getElementById("chunks-chart"), {
+    type: "bar",
+    data: { labels: top.map((x) => x.phrase), datasets: [{ label: "Mentions", data: top.map((x) => x.count), backgroundColor: top.map((x) => ASPECT_COLOR[x.aspect] || c.neu), borderRadius: 4 }] },
+    options: { indexAxis: "y", maintainAspectRatio: false, animation: false, plugins: { legend: { display: false }, tooltip: { callbacks: { afterLabel: (i) => `Aspect: ${top[i.dataIndex].aspect ? ASPECT_LABEL[top[i.dataIndex].aspect] : "other"}` } } },
+      scales: { x: { ...axis, beginAtZero: true, ticks: { color: c.muted, precision: 0 } }, y: { ...axis, ticks: { color: c.text } } } },
+  }));
+  const ents = [...f.entities].sort((a, b) => b.count - a.count).slice(0, 10);
+  if (ents.length) charts.push(new window.Chart(document.getElementById("entities-chart"), {
+    type: "bar",
+    data: { labels: ents.map((e) => `${e.text} (${e.label})`), datasets: [{ label: "Mentions", data: ents.map((e) => e.count), backgroundColor: ents.map((e) => (e.source === "ruler" ? ASPECT_COLOR.visuals : ASPECT_COLOR.story)), borderRadius: 4 }] },
+    options: { indexAxis: "y", maintainAspectRatio: false, animation: false, plugins: { legend: { display: false }, tooltip: { callbacks: { afterLabel: (i) => (ents[i.dataIndex].source === "ruler" ? "Found by the EntityRuler" : "Found by the statistical NER model") } } },
+      scales: { x: { ...axis, beginAtZero: true, ticks: { color: c.muted, precision: 0 } }, y: { ...axis, ticks: { color: c.text } } } },
   }));
   const h = f.sentiment.histogram;
   charts.push(new window.Chart(document.getElementById("sentiment-chart"), {

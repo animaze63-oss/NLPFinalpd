@@ -133,7 +133,8 @@ Then open http://127.0.0.1:8888/ in your browser.
    Locally, the build command took about 22 s on Python 3.12, and `pip install` took about 15 s with a warm pip cache.
    The publish folder is about 16 MB in 43 files.
 5. Verify the deploy:
-   - `/` lists 14 films, and `/film/arrival` opens a dashboard with NLTK and spaCy badges.
+   - `/` lists 14 films and shows three labelled visuals: the **spaCy** aspect-mentions chart, the **spaCy + NLTK** aspect heatmap and the **NLTK** Tomatometer-vs-VADER chart.
+   - `/film/arrival` opens a dashboard with NLTK, spaCy and spaCy + NLTK badges, and the noun-chunk and entity panels show spaCy bar charts.
    - `/resources.html` is linked from both the header and the footer.
    - **Analyze your own critique** returns a VADER score after a few seconds (the first load fetches about 14 MB, cached afterwards).
    - Check the headers. This command should show `Content-Type: application/wasm` and `Cache-Control: public, max-age=31536000, immutable`:
