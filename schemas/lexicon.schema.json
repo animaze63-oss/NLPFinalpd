@@ -1,0 +1,63 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "lexicon.schema.json",
+  "title": "Shared lexicon for build and Pyodide (site/data/lexicon.json)",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "lexicon_version",
+    "aspects",
+    "aspect_terms",
+    "aspect_phrases",
+    "ambiguous",
+    "vader_overrides",
+    "thresholds",
+    "domain_stopwords",
+    "negators"
+  ],
+  "properties": {
+    "schema_version": {
+      "type": "string",
+      "pattern": "^1\\.\\d+$"
+    },
+    "aspects": {
+      "const": [
+        "visuals",
+        "story",
+        "characters",
+        "soundtrack"
+      ]
+    },
+    "aspect_terms": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        }
+      }
+    },
+    "aspect_phrases": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        }
+      }
+    },
+    "vader_overrides": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "number"
+      }
+    },
+    "thresholds": {
+      "type": "object",
+      "required": [
+        "positive",
+        "negative"
+      ]
+    }
+  }
+}

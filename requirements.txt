@@ -1,0 +1,7 @@
+# Build-time dependencies for the Netlify build (auto-installed by Netlify from the base directory).
+# NLTK is pinned to 3.9.4 to match the nltk package bundled with Pyodide 314.0.8 (browser/build parity).
+nltk==3.9.4
+spacy==3.8.7
+en_core_web_sm @ https://github.com/explosion/spacy-models/releases/download/en_core_web_sm-3.8.0/en_core_web_sm-3.8.0-py3-none-any.whl
+pandas==2.2.3
+jsonschema==4.23.0

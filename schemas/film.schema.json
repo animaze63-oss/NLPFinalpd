@@ -1,0 +1,1007 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "film.schema.json",
+  "title": "Per-film dashboard data (site/data/film/<slug>.json)",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "slug",
+    "title",
+    "year",
+    "directors",
+    "n_reviews",
+    "n_fresh",
+    "n_rotten",
+    "tomatometer",
+    "sentiment",
+    "aspects",
+    "top_words",
+    "collocations",
+    "entities",
+    "noun_chunks",
+    "timeline",
+    "quotes",
+    "sources"
+  ],
+  "properties": {
+    "schema_version": {
+      "type": "string",
+      "pattern": "^1\\.\\d+$"
+    },
+    "slug": {
+      "type": "string",
+      "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$"
+    },
+    "title": {
+      "type": "string"
+    },
+    "year": {
+      "type": [
+        "integer",
+        "null"
+      ]
+    },
+    "directors": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "cast": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "studio": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "critics_consensus": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "rt_url": {
+      "type": "string"
+    },
+    "n_reviews": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "n_fresh": {
+      "type": "integer"
+    },
+    "n_rotten": {
+      "type": "integer"
+    },
+    "n_top_critics": {
+      "type": "integer"
+    },
+    "tomatometer": {
+      "type": [
+        "integer",
+        "null"
+      ],
+      "minimum": 0,
+      "maximum": 100
+    },
+    "sentiment": {
+      "type": "object",
+      "required": [
+        "source",
+        "mean_compound",
+        "positive",
+        "neutral",
+        "negative",
+        "histogram"
+      ],
+      "properties": {
+        "source": {
+          "const": "nltk"
+        },
+        "mean_compound": {
+          "type": "number",
+          "minimum": -1,
+          "maximum": 1
+        },
+        "positive": {
+          "type": "integer"
+        },
+        "neutral": {
+          "type": "integer"
+        },
+        "negative": {
+          "type": "integer"
+        },
+        "n_sentences": {
+          "type": "integer"
+        },
+        "histogram": {
+          "type": "array",
+          "minItems": 10,
+          "maxItems": 10,
+          "items": {
+            "type": "object",
+            "required": [
+              "from",
+              "to",
+              "n"
+            ],
+            "properties": {
+              "from": {
+                "type": "number"
+              },
+              "to": {
+                "type": "number"
+              },
+              "n": {
+                "type": "integer"
+              }
+            }
+          }
+        }
+      }
+    },
+    "aspects": {
+      "type": "object",
+      "required": [
+        "visuals",
+        "story",
+        "characters",
+        "soundtrack"
+      ],
+      "properties": {
+        "visuals": {
+          "type": "object",
+          "required": [
+            "mentions",
+            "reviews",
+            "mean_compound",
+            "positive",
+            "neutral",
+            "negative",
+            "top_terms",
+            "top_opinions",
+            "quotes"
+          ],
+          "properties": {
+            "mentions": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "reviews": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "mean_compound": {
+              "type": [
+                "number",
+                "null"
+              ],
+              "minimum": -1,
+              "maximum": 1
+            },
+            "positive": {
+              "type": "integer"
+            },
+            "neutral": {
+              "type": "integer"
+            },
+            "negative": {
+              "type": "integer"
+            },
+            "top_terms": {
+              "type": "array",
+              "items": {
+                "type": "array",
+                "prefixItems": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "integer",
+                    "minimum": 0
+                  }
+                ],
+                "minItems": 2,
+                "maxItems": 2
+              }
+            },
+            "top_opinions": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "required": [
+                  "word",
+                  "count",
+                  "valence",
+                  "negated"
+                ],
+                "properties": {
+                  "word": {
+                    "type": "string"
+                  },
+                  "count": {
+                    "type": "integer"
+                  },
+                  "valence": {
+                    "type": "number"
+                  },
+                  "negated": {
+                    "type": "integer"
+                  }
+                }
+              }
+            },
+            "quotes": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "required": [
+                  "text",
+                  "critic",
+                  "publisher",
+                  "review_type",
+                  "compound"
+                ],
+                "properties": {
+                  "text": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 300
+                  },
+                  "critic": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "publisher": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "top_critic": {
+                    "type": "boolean"
+                  },
+                  "review_type": {
+                    "enum": [
+                      "Fresh",
+                      "Rotten"
+                    ]
+                  },
+                  "date": {
+                    "type": [
+                      "string",
+                      "null"
+                    ]
+                  },
+                  "compound": {
+                    "type": "number",
+                    "minimum": -1,
+                    "maximum": 1
+                  }
+                }
+              }
+            }
+          }
+        },
+        "story": {
+          "type": "object",
+          "required": [
+            "mentions",
+            "reviews",
+            "mean_compound",
+            "positive",
+            "neutral",
+            "negative",
+            "top_terms",
+            "top_opinions",
+            "quotes"
+          ],
+          "properties": {
+            "mentions": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "reviews": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "mean_compound": {
+              "type": [
+                "number",
+                "null"
+              ],
+              "minimum": -1,
+              "maximum": 1
+            },
+            "positive": {
+              "type": "integer"
+            },
+            "neutral": {
+              "type": "integer"
+            },
+            "negative": {
+              "type": "integer"
+            },
+            "top_terms": {
+              "type": "array",
+              "items": {
+                "type": "array",
+                "prefixItems": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "integer",
+                    "minimum": 0
+                  }
+                ],
+                "minItems": 2,
+                "maxItems": 2
+              }
+            },
+            "top_opinions": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "required": [
+                  "word",
+                  "count",
+                  "valence",
+                  "negated"
+                ],
+                "properties": {
+                  "word": {
+                    "type": "string"
+                  },
+                  "count": {
+                    "type": "integer"
+                  },
+                  "valence": {
+                    "type": "number"
+                  },
+                  "negated": {
+                    "type": "integer"
+                  }
+                }
+              }
+            },
+            "quotes": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "required": [
+                  "text",
+                  "critic",
+                  "publisher",
+                  "review_type",
+                  "compound"
+                ],
+                "properties": {
+                  "text": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 300
+                  },
+                  "critic": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "publisher": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "top_critic": {
+                    "type": "boolean"
+                  },
+                  "review_type": {
+                    "enum": [
+                      "Fresh",
+                      "Rotten"
+                    ]
+                  },
+                  "date": {
+                    "type": [
+                      "string",
+                      "null"
+                    ]
+                  },
+                  "compound": {
+                    "type": "number",
+                    "minimum": -1,
+                    "maximum": 1
+                  }
+                }
+              }
+            }
+          }
+        },
+        "characters": {
+          "type": "object",
+          "required": [
+            "mentions",
+            "reviews",
+            "mean_compound",
+            "positive",
+            "neutral",
+            "negative",
+            "top_terms",
+            "top_opinions",
+            "quotes"
+          ],
+          "properties": {
+            "mentions": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "reviews": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "mean_compound": {
+              "type": [
+                "number",
+                "null"
+              ],
+              "minimum": -1,
+              "maximum": 1
+            },
+            "positive": {
+              "type": "integer"
+            },
+            "neutral": {
+              "type": "integer"
+            },
+            "negative": {
+              "type": "integer"
+            },
+            "top_terms": {
+              "type": "array",
+              "items": {
+                "type": "array",
+                "prefixItems": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "integer",
+                    "minimum": 0
+                  }
+                ],
+                "minItems": 2,
+                "maxItems": 2
+              }
+            },
+            "top_opinions": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "required": [
+                  "word",
+                  "count",
+                  "valence",
+                  "negated"
+                ],
+                "properties": {
+                  "word": {
+                    "type": "string"
+                  },
+                  "count": {
+                    "type": "integer"
+                  },
+                  "valence": {
+                    "type": "number"
+                  },
+                  "negated": {
+                    "type": "integer"
+                  }
+                }
+              }
+            },
+            "quotes": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "required": [
+                  "text",
+                  "critic",
+                  "publisher",
+                  "review_type",
+                  "compound"
+                ],
+                "properties": {
+                  "text": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 300
+                  },
+                  "critic": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "publisher": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "top_critic": {
+                    "type": "boolean"
+                  },
+                  "review_type": {
+                    "enum": [
+                      "Fresh",
+                      "Rotten"
+                    ]
+                  },
+                  "date": {
+                    "type": [
+                      "string",
+                      "null"
+                    ]
+                  },
+                  "compound": {
+                    "type": "number",
+                    "minimum": -1,
+                    "maximum": 1
+                  }
+                }
+              }
+            }
+          }
+        },
+        "soundtrack": {
+          "type": "object",
+          "required": [
+            "mentions",
+            "reviews",
+            "mean_compound",
+            "positive",
+            "neutral",
+            "negative",
+            "top_terms",
+            "top_opinions",
+            "quotes"
+          ],
+          "properties": {
+            "mentions": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "reviews": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "mean_compound": {
+              "type": [
+                "number",
+                "null"
+              ],
+              "minimum": -1,
+              "maximum": 1
+            },
+            "positive": {
+              "type": "integer"
+            },
+            "neutral": {
+              "type": "integer"
+            },
+            "negative": {
+              "type": "integer"
+            },
+            "top_terms": {
+              "type": "array",
+              "items": {
+                "type": "array",
+                "prefixItems": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "integer",
+                    "minimum": 0
+                  }
+                ],
+                "minItems": 2,
+                "maxItems": 2
+              }
+            },
+            "top_opinions": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "required": [
+                  "word",
+                  "count",
+                  "valence",
+                  "negated"
+                ],
+                "properties": {
+                  "word": {
+                    "type": "string"
+                  },
+                  "count": {
+                    "type": "integer"
+                  },
+                  "valence": {
+                    "type": "number"
+                  },
+                  "negated": {
+                    "type": "integer"
+                  }
+                }
+              }
+            },
+            "quotes": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "required": [
+                  "text",
+                  "critic",
+                  "publisher",
+                  "review_type",
+                  "compound"
+                ],
+                "properties": {
+                  "text": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 300
+                  },
+                  "critic": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "publisher": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "top_critic": {
+                    "type": "boolean"
+                  },
+                  "review_type": {
+                    "enum": [
+                      "Fresh",
+                      "Rotten"
+                    ]
+                  },
+                  "date": {
+                    "type": [
+                      "string",
+                      "null"
+                    ]
+                  },
+                  "compound": {
+                    "type": "number",
+                    "minimum": -1,
+                    "maximum": 1
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    "top_words": {
+      "type": "object",
+      "required": [
+        "positive",
+        "negative"
+      ],
+      "properties": {
+        "positive": {
+          "type": "array",
+          "items": {
+            "type": "array",
+            "prefixItems": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "integer",
+                "minimum": 0
+              }
+            ],
+            "minItems": 2,
+            "maxItems": 2
+          }
+        },
+        "negative": {
+          "type": "array",
+          "items": {
+            "type": "array",
+            "prefixItems": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "integer",
+                "minimum": 0
+              }
+            ],
+            "minItems": 2,
+            "maxItems": 2
+          }
+        }
+      }
+    },
+    "collocations": {
+      "type": "object",
+      "required": [
+        "positive",
+        "negative",
+        "all"
+      ],
+      "properties": {
+        "positive": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "phrase",
+              "count",
+              "score"
+            ],
+            "properties": {
+              "phrase": {
+                "type": "string"
+              },
+              "count": {
+                "type": "integer"
+              },
+              "score": {
+                "type": "number"
+              }
+            }
+          }
+        },
+        "negative": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "phrase",
+              "count",
+              "score"
+            ],
+            "properties": {
+              "phrase": {
+                "type": "string"
+              },
+              "count": {
+                "type": "integer"
+              },
+              "score": {
+                "type": "number"
+              }
+            }
+          }
+        },
+        "all": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "phrase",
+              "count",
+              "score"
+            ],
+            "properties": {
+              "phrase": {
+                "type": "string"
+              },
+              "count": {
+                "type": "integer"
+              },
+              "score": {
+                "type": "number"
+              }
+            }
+          }
+        }
+      }
+    },
+    "entities": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "text",
+          "label",
+          "count",
+          "source"
+        ],
+        "properties": {
+          "text": {
+            "type": "string"
+          },
+          "label": {
+            "type": "string"
+          },
+          "count": {
+            "type": "integer"
+          },
+          "source": {
+            "enum": [
+              "ruler",
+              "model"
+            ]
+          }
+        }
+      }
+    },
+    "noun_chunks": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "phrase",
+          "count",
+          "aspect"
+        ],
+        "properties": {
+          "phrase": {
+            "type": "string"
+          },
+          "count": {
+            "type": "integer"
+          },
+          "aspect": {
+            "enum": [
+              "visuals",
+              "story",
+              "characters",
+              "soundtrack",
+              null
+            ]
+          }
+        }
+      }
+    },
+    "timeline": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "year",
+          "n",
+          "mean_compound"
+        ],
+        "properties": {
+          "year": {
+            "type": "integer"
+          },
+          "n": {
+            "type": "integer"
+          },
+          "mean_compound": {
+            "type": "number",
+            "minimum": -1,
+            "maximum": 1
+          }
+        }
+      }
+    },
+    "quotes": {
+      "type": "object",
+      "required": [
+        "most_positive",
+        "most_negative"
+      ],
+      "properties": {
+        "most_positive": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "text",
+              "critic",
+              "publisher",
+              "review_type",
+              "compound"
+            ],
+            "properties": {
+              "text": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 300
+              },
+              "critic": {
+                "type": "string",
+                "minLength": 1
+              },
+              "publisher": {
+                "type": "string",
+                "minLength": 1
+              },
+              "top_critic": {
+                "type": "boolean"
+              },
+              "review_type": {
+                "enum": [
+                  "Fresh",
+                  "Rotten"
+                ]
+              },
+              "date": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "compound": {
+                "type": "number",
+                "minimum": -1,
+                "maximum": 1
+              }
+            }
+          }
+        },
+        "most_negative": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "text",
+              "critic",
+              "publisher",
+              "review_type",
+              "compound"
+            ],
+            "properties": {
+              "text": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 300
+              },
+              "critic": {
+                "type": "string",
+                "minLength": 1
+              },
+              "publisher": {
+                "type": "string",
+                "minLength": 1
+              },
+              "top_critic": {
+                "type": "boolean"
+              },
+              "review_type": {
+                "enum": [
+                  "Fresh",
+                  "Rotten"
+                ]
+              },
+              "date": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "compound": {
+                "type": "number",
+                "minimum": -1,
+                "maximum": 1
+              }
+            }
+          }
+        }
+      }
+    },
+    "sources": {
+      "type": "object",
+      "description": "which library produced each panel",
+      "additionalProperties": {
+        "enum": [
+          "nltk",
+          "spacy",
+          "spacy+nltk",
+          "dataset"
+        ]
+      }
+    }
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "eval.schema.json",
+  "title": "Evaluation results (site/data/eval.json)",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "versions",
+    "dataset",
+    "vader_vs_labels",
+    "ablation",
+    "regression",
+    "parity",
+    "aspect_extraction",
+    "methodology"
+  ],
+  "properties": {
+    "schema_version": {
+      "type": "string",
+      "pattern": "^1\\.\\d+$"
+    }
+  }
+}
