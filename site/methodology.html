@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Methodology & evaluation | Scifi Cinema Lens</title>
+<meta name="description" content="Scifi Cinema Lens: what critics praise or criticise about science-fiction films (visuals, story, characters, soundtrack), analysed with NLTK and spaCy.">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="/css/styles.css">
+<script src="/js/theme.js"></script>
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="site-header">
+  <div class="wrap">
+    <a class="brand" href="/"><span class="brand-mark" aria-hidden="true"></span>Scifi Cinema Lens</a>
+    <nav class="site-nav" aria-label="Main">
+      <ul>
+        <li><a href="/">Films</a></li>
+        <li><a href="/#analyze">Analyze your own critique</a></li>
+        <li><a href="/methodology.html" aria-current="page">Methodology</a></li>
+        <li><a href="/resources.html">Resources</a></li>
+      </ul>
+    </nav>
+    <button type="button" class="theme-toggle" id="theme-toggle">Switch to light theme</button>
+  </div>
+</header>
+<main id="main">
+  <div class="wrap prose">
+    <section class="hero">
+      <h1>Methodology &amp; evaluation</h1>
+      <p class="lead">How Scifi Cinema Lens turns critic blurbs into aspect-based results, which library does what, and how well it works.</p>
+    </section>
+    <section class="legend" aria-label="Which library produced each result">
+        <strong>Legend:</strong>
+        <dl>
+          <div><dt><span class="badge badge-nltk">NLTK</span></dt><dd>tokenizing, stopwords, VADER sentiment, word counts, key phrases</dd></div>
+          <div><dt><span class="badge badge-spacy">spaCy</span></dt><dd>named entities, EntityRuler, noun chunks, dependency parse</dd></div>
+          <div><dt><span class="badge badge-combo">spaCy + NLTK</span></dt><dd>spaCy finds the aspect, NLTK VADER scores it</dd></div>
+          <div><dt><span class="badge badge-data">Dataset</span></dt><dd>Rotten Tomatoes metadata</dd></div>
+        </dl>
+      </section>
+    <h2>Architecture</h2>
+    <p>Everything runs on Netlify with no outside servers. During the Netlify build, Python runs <span class="badge badge-nltk">NLTK</span> and
+      <span class="badge badge-spacy">spaCy</span> over the committed review sample (<code>data/scifi_reviews.csv</code>) and writes static JSON to
+      <code>/data/</code>. The dashboard is plain HTML, CSS and JavaScript that reads that JSON. The <a href="/#analyze">Analyze your own critique</a>
+      box runs NLTK VADER in your browser with Pyodide in a Web Worker. spaCy never runs in the browser, and no Netlify Functions are used.</p>
+    <h2>Who does what</h2>
+    <ul>
+      <li><span class="badge badge-nltk">NLTK</span> Punkt sentence splitting (<code>punkt_tab</code>), Treebank word tokens, English stopwords plus a sci-fi stopword list, VADER sentiment per review and per sentence, <code>FreqDist</code> praise and criticism words, bigram and trigram collocations (likelihood ratio, frequency filter) as key phrases.</li>
+      <li><span class="badge badge-spacy">spaCy</span> <code>en_core_web_sm</code>: named entities with an <code>EntityRuler</code> placed before the statistical NER, noun chunks mapped to aspects, lemmas, and the dependency parse that links opinion words to aspect nouns (<code>amod</code>, <code>nsubj</code> + <code>acomp</code>, <code>conj</code>, <code>neg</code>, <code>compound</code>).</li>
+      <li><span class="badge badge-combo">spaCy + NLTK</span> aspect-based sentiment: spaCy finds a visuals, story, characters or soundtrack mention, and NLTK VADER scores the sentence it appears in.</li>
+    </ul>
+    <h2>From product reviews to film reviews</h2>
+    <p>The original project template talked about "brands and products" and noun-chunk aspects such as "battery life". In the film domain the
+      EntityRuler adds <strong>STUDIO</strong> (Warner Bros., 20th Century Fox, A24), <strong>FRANCHISE</strong> (Star Wars, Alien, Mad Max) and
+      <strong>FILM_TECH</strong> (IMAX, 3D, CGI, motion capture) patterns, plus <strong>PERSON</strong> and <strong>WORK_OF_ART</strong> patterns seeded
+      from each film's directors, writers, cast and title. Noun-chunk aspects are phrases such as "visual effects", "sound design", "production design",
+      "third act", "world building" and "lead performance", mapped to visuals, story, characters and soundtrack.</p>
+    <h2>Evaluation</h2>
+    <div id="eval"><p class="notice">Loading evaluation&hellip;</p></div>
+    <h2>How spaCy reads a sentence</h2>
+    <p class="muted">Dependency parses rendered with displaCy at build time from real review sentences (static SVG; spaCy is not running in your browser).</p>
+    <div id="examples"></div>
+    <h2>Shared lexicon</h2>
+    <p>The aspect triggers and VADER overrides live in one file, <a href="/data/lexicon.json"><code>/data/lexicon.json</code></a>, which both the build and the in-browser analyzer load.</p>
+    <div id="lexicon"></div>
+  </div>
+</main>
+<footer class="site-footer">
+  <div class="wrap">
+    <nav aria-label="Footer">
+      <ul>
+        <li><a href="/resources.html">Resources &amp; documentation</a></li>
+        <li><a href="/methodology.html">Methodology &amp; evaluation</a></li>
+        <li><a href="https://github.com/animaze63-oss/NLPFinalpd">GitHub repository</a></li>
+        <li><a href="https://github.com/animaze63-oss/NLPFinalpd#readme">Step-by-step guide</a></li>
+      </ul>
+    </nav>
+    <p class="muted small">Review excerpts are written by the credited critics and publications and come from the
+      <a href="https://www.kaggle.com/datasets/stefanoleone992/rotten-tomatoes-movies-and-critic-reviews-dataset">Rotten Tomatoes movies and critic reviews dataset</a>
+      (Kaggle, CC0, scraped October 2020). NLTK and spaCy ran at build time on Netlify; the critique analyzer runs NLTK in your browser with Pyodide.</p>
+  </div>
+</footer>
+<script type="module" src="/js/methodology.js"></script>
+</body>
+</html>

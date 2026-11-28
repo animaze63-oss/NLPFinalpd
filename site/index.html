@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Scifi Cinema Lens: what critics say about sci-fi films</title>
+<meta name="description" content="Scifi Cinema Lens: what critics praise or criticise about science-fiction films (visuals, story, characters, soundtrack), analysed with NLTK and spaCy.">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="/css/styles.css">
+<script src="/js/theme.js"></script>
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="site-header">
+  <div class="wrap">
+    <a class="brand" href="/"><span class="brand-mark" aria-hidden="true"></span>Scifi Cinema Lens</a>
+    <nav class="site-nav" aria-label="Main">
+      <ul>
+        <li><a href="/" aria-current="page">Films</a></li>
+        <li><a href="/#analyze">Analyze your own critique</a></li>
+        <li><a href="/methodology.html">Methodology</a></li>
+        <li><a href="/resources.html">Resources</a></li>
+      </ul>
+    </nav>
+    <button type="button" class="theme-toggle" id="theme-toggle">Switch to light theme</button>
+  </div>
+</header>
+<main id="main">
+  <div class="wrap">
+    <div id="view">
+      <section class="hero">
+        <h1>What do critics praise in sci-fi?</h1>
+        <p class="lead">Pick a science-fiction film to see what critics say about its <strong>visuals</strong>, <strong>story</strong>, <strong>characters</strong> and <strong>soundtrack</strong>.</p>
+      </section>
+      <p class="notice" id="loading">Loading films&hellip;</p>
+      <noscript><p class="notice">This dashboard needs JavaScript to load its data.</p></noscript>
+    </div>
+
+    <section class="analyzer" id="analyze" aria-labelledby="analyze-title">
+      <div class="panel-head">
+        <h2 id="analyze-title">Analyze your own critique</h2>
+        <span class="badge badge-nltk">NLTK</span>
+        <span class="chip">runs in your browser (Pyodide)</span>
+      </div>
+      <p class="privacy"><span aria-hidden="true">&#128274;</span><span><strong>Your text never leaves this device.</strong>
+        Python and NLTK run in a Web Worker in your browser with Pyodide. Nothing is uploaded, stored or sent to a server.
+        The first run downloads about 14&nbsp;MB from this site (the Python runtime plus NLTK).</span></p>
+      <form id="analyze-form" novalidate>
+        <div class="field">
+          <label for="critique">Your critique</label>
+          <textarea id="critique" name="critique" maxlength="5000" aria-describedby="critique-help"
+            placeholder="e.g. The visual effects are stunning, but the third act drags and the characters are paper-thin."></textarea>
+          <span id="critique-help" class="muted small">Write in English, up to 5,000 characters. Scored with NLTK VADER, using the same sci-fi lexicon rules as the dashboard.</span>
+        </div>
+        <p style="margin-top:0.8rem"><button class="btn" type="submit" id="analyze-btn">Analyze with NLTK</button></p>
+      </form>
+      <p class="status" id="analyze-status" role="status" aria-live="polite"></p>
+      <div id="analyze-result" hidden></div>
+      <p class="muted small">spaCy cannot run in the browser (it is not available in Pyodide), so aspects here are found
+        with the shared keyword list. The film dashboards use spaCy dependency parses computed at build time.</p>
+    </section>
+  </div>
+</main>
+<footer class="site-footer">
+  <div class="wrap">
+    <nav aria-label="Footer">
+      <ul>
+        <li><a href="/resources.html">Resources &amp; documentation</a></li>
+        <li><a href="/methodology.html">Methodology &amp; evaluation</a></li>
+        <li><a href="https://github.com/animaze63-oss/NLPFinalpd">GitHub repository</a></li>
+        <li><a href="https://github.com/animaze63-oss/NLPFinalpd#readme">Step-by-step guide</a></li>
+      </ul>
+    </nav>
+    <p class="muted small">Review excerpts are written by the credited critics and publications and come from the
+      <a href="https://www.kaggle.com/datasets/stefanoleone992/rotten-tomatoes-movies-and-critic-reviews-dataset">Rotten Tomatoes movies and critic reviews dataset</a>
+      (Kaggle, CC0, scraped October 2020). NLTK and spaCy ran at build time on Netlify; the critique analyzer runs NLTK in your browser with Pyodide.</p>
+  </div>
+</footer>
+<script src="/vendor/chart.umd.min.js" defer></script>
+<script type="module" src="/js/app.js"></script>
+<script type="module" src="/js/analyzer.js"></script>
+</body>
+</html>

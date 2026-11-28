@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Resources | Scifi Cinema Lens</title>
+<meta name="description" content="Scifi Cinema Lens: what critics praise or criticise about science-fiction films (visuals, story, characters, soundtrack), analysed with NLTK and spaCy.">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="/css/styles.css">
+<script src="/js/theme.js"></script>
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="site-header">
+  <div class="wrap">
+    <a class="brand" href="/"><span class="brand-mark" aria-hidden="true"></span>Scifi Cinema Lens</a>
+    <nav class="site-nav" aria-label="Main">
+      <ul>
+        <li><a href="/">Films</a></li>
+        <li><a href="/#analyze">Analyze your own critique</a></li>
+        <li><a href="/methodology.html">Methodology</a></li>
+        <li><a href="/resources.html" aria-current="page">Resources</a></li>
+      </ul>
+    </nav>
+    <button type="button" class="theme-toggle" id="theme-toggle">Switch to light theme</button>
+  </div>
+</header>
+<main id="main">
+  <div class="wrap prose">
+    <section class="hero">
+      <h1>Resources</h1>
+      <p class="lead">Every link this project relies on: library documentation, the dataset, the GitHub repository and the step-by-step guide.</p>
+    </section>
+    <nav aria-label="On this page"><ul class="chips"><li><a class="chip" href="#project">This project</a></li><li><a class="chip" href="#nltk">NLTK</a></li><li><a class="chip" href="#vader">VADER</a></li><li><a class="chip" href="#spacy">spaCy</a></li><li><a class="chip" href="#pyodide">Pyodide</a></li><li><a class="chip" href="#netlify">Netlify</a></li><li><a class="chip" href="#web">Charts, data and Python</a></li><li><a class="chip" href="#data">Dataset</a></li><li><a class="chip" href="#a11y">Accessibility</a></li></ul></nav>
+    <section aria-labelledby="project"><h2 id="project">This project</h2>
+      <ul class="res-list">
+        <li><a href="https://github.com/animaze63-oss/NLPFinalpd">GitHub repository: animaze63-oss/NLPFinalpd</a><span class="desc">Source code, data sample, pipeline, tests and agent team.</span></li>
+        <li><a href="https://github.com/animaze63-oss/NLPFinalpd#readme">Step-by-step guide (README)</a><span class="desc">Architecture, local build, Netlify deploy steps, testing and dataset provenance.</span></li>
+        <li><a href="https://github.com/animaze63-oss/NLPFinalpd/blob/main/data/README.md">Dataset notes (data/README.md)</a><span class="desc">Exact source, mirror commit, filters, row counts and licence notes for the committed sample.</span></li>
+        <li><a href="/methodology.html">Methodology & evaluation</a><span class="desc">Which library does what, VADER vs Fresh/Rotten metrics, failure modes.</span></li>
+      </ul>
+    </section>
+    <section aria-labelledby="nltk"><h2 id="nltk">NLTK</h2>
+      <ul class="res-list">
+        <li><a href="https://www.nltk.org/">NLTK documentation</a><span class="desc">Natural Language Toolkit home page.</span></li>
+        <li><a href="https://www.nltk.org/howto/sentiment.html">NLTK sentiment analysis how-to (VADER)</a><span class="desc">Reference outputs used as our regression tests.</span></li>
+        <li><a href="https://www.nltk.org/api/nltk.sentiment.vader.html">nltk.sentiment.vader API</a><span class="desc">SentimentIntensityAnalyzer, compound score, lexicon.</span></li>
+        <li><a href="https://www.nltk.org/data.html">Installing NLTK data</a><span class="desc">punkt_tab, stopwords and vader_lexicon downloads used in the build.</span></li>
+        <li><a href="https://www.nltk.org/api/nltk.tokenize.html">nltk.tokenize API</a><span class="desc">sent_tokenize and word_tokenize.</span></li>
+        <li><a href="https://www.nltk.org/api/nltk.probability.FreqDist.html">nltk.probability.FreqDist</a><span class="desc">Praise and criticism word counts.</span></li>
+        <li><a href="https://www.nltk.org/howto/collocations.html">NLTK collocations how-to</a><span class="desc">Bigram and trigram finders used for key phrases.</span></li>
+        <li><a href="https://www.nltk.org/book/">Natural Language Processing with Python (NLTK book)</a><span class="desc">Background reading.</span></li>
+      </ul>
+    </section>
+    <section aria-labelledby="vader"><h2 id="vader">VADER</h2>
+      <ul class="res-list">
+        <li><a href="https://github.com/cjhutto/vaderSentiment">vaderSentiment repository (C.J. Hutto)</a><span class="desc">Original VADER project; source of the ±0.05 thresholds.</span></li>
+        <li><a href="https://ojs.aaai.org/index.php/ICWSM/article/view/14550">Hutto & Gilbert (2014), VADER paper, ICWSM</a><span class="desc">VADER: A Parsimonious Rule-based Model for Sentiment Analysis of Social Media Text.</span></li>
+      </ul>
+    </section>
+    <section aria-labelledby="spacy"><h2 id="spacy">spaCy</h2>
+      <ul class="res-list">
+        <li><a href="https://spacy.io/">spaCy documentation</a><span class="desc">Industrial-strength NLP in Python.</span></li>
+        <li><a href="https://spacy.io/usage">spaCy installation and usage</a><span class="desc">Install guide and usage docs.</span></li>
+        <li><a href="https://spacy.io/models/en">English pipelines (en_core_web_sm)</a><span class="desc">The 3.8.0 small English model used at build time.</span></li>
+        <li><a href="https://spacy.io/usage/rule-based-matching#entityruler">Rule-based matching: EntityRuler</a><span class="desc">How the film-domain STUDIO, FRANCHISE and FILM_TECH patterns work.</span></li>
+        <li><a href="https://spacy.io/usage/linguistic-features">Linguistic features</a><span class="desc">Named entities, noun chunks, lemmas and the dependency parse.</span></li>
+        <li><a href="https://spacy.io/usage/processing-pipelines">Processing pipelines</a><span class="desc">nlp.pipe batching and pipeline components.</span></li>
+        <li><a href="https://spacy.io/usage/visualizers">Visualizers (displaCy)</a><span class="desc">Dependency diagrams on the methodology page.</span></li>
+      </ul>
+    </section>
+    <section aria-labelledby="pyodide"><h2 id="pyodide">Pyodide</h2>
+      <ul class="res-list">
+        <li><a href="https://pyodide.org/en/stable/">Pyodide documentation</a><span class="desc">Python in the browser via WebAssembly (version 314.0.8).</span></li>
+        <li><a href="https://pyodide.org/en/stable/usage/webworker.html">Using Pyodide in a Web Worker</a><span class="desc">How the critique analyzer stays off the main thread.</span></li>
+        <li><a href="https://pyodide.org/en/stable/usage/downloading-and-deploying.html">Downloading and deploying Pyodide</a><span class="desc">Self-hosting the runtime on Netlify.</span></li>
+        <li><a href="https://pyodide.org/en/stable/usage/packages-in-pyodide.html">Packages built in Pyodide</a><span class="desc">nltk 3.9.4 is a built-in package; spaCy is not.</span></li>
+        <li><a href="https://github.com/pyodide/pyodide/releases/tag/314.0.8">Pyodide 314.0.8 release</a><span class="desc">The release archive the build downloads.</span></li>
+      </ul>
+    </section>
+    <section aria-labelledby="netlify"><h2 id="netlify">Netlify</h2>
+      <ul class="res-list">
+        <li><a href="https://docs.netlify.com/build/configure-builds/file-based-configuration/">File-based configuration (netlify.toml)</a><span class="desc">Build command, publish folder, headers and redirects.</span></li>
+        <li><a href="https://docs.netlify.com/build/configure-builds/manage-dependencies/">Manage build dependencies (Python)</a><span class="desc">PYTHON_VERSION and automatic pip install of requirements.txt.</span></li>
+        <li><a href="https://docs.netlify.com/build/configure-builds/available-software-at-build-time/">Available software at build time</a><span class="desc">Build image, Python and Node versions.</span></li>
+        <li><a href="https://docs.netlify.com/build/functions/get-started/">Netlify Functions: languages</a><span class="desc">TypeScript, JavaScript and Go only, which is why NLP runs at build time.</span></li>
+        <li><a href="https://docs.netlify.com/build/edge-functions/limits/">Edge Functions limits</a><span class="desc">Deno runtime limits (not used here).</span></li>
+        <li><a href="https://docs.netlify.com/manage/routing/headers/">Custom headers</a><span class="desc">Cache and security headers for data and Pyodide files.</span></li>
+        <li><a href="https://docs.netlify.com/deploy/deploy-types/deploy-previews/">Deploy Previews</a><span class="desc">Every branch and pull request gets a preview URL.</span></li>
+      </ul>
+    </section>
+    <section aria-labelledby="web"><h2 id="web">Charts, data and Python</h2>
+      <ul class="res-list">
+        <li><a href="https://www.chartjs.org/docs/latest/">Chart.js documentation</a><span class="desc">Charts (self-hosted v4.6.2 from npm).</span></li>
+        <li><a href="https://www.chartjs.org/docs/latest/general/accessibility.html">Chart.js accessibility</a><span class="desc">Why every chart has a data table.</span></li>
+        <li><a href="https://pandas.pydata.org/docs/">pandas documentation</a><span class="desc">Loading and filtering the review CSVs.</span></li>
+        <li><a href="https://docs.python.org/3/">Python 3 documentation</a><span class="desc">Python 3.12 on Netlify, 3.14 inside Pyodide.</span></li>
+        <li><a href="https://python-jsonschema.readthedocs.io/en/stable/">jsonschema (Python)</a><span class="desc">Validates every generated JSON file in the build.</span></li>
+      </ul>
+    </section>
+    <section aria-labelledby="data"><h2 id="data">Dataset</h2>
+      <ul class="res-list">
+        <li><a href="https://www.kaggle.com/datasets/stefanoleone992/rotten-tomatoes-movies-and-critic-reviews-dataset">Rotten Tomatoes movies and critic reviews (Kaggle, Stefano Leone)</a><span class="desc">CC0: Public Domain; scraped 2020-10-31. Review text remains the work of the credited critics.</span></li>
+        <li><a href="https://github.com/Telmo465/FEUP-PRI/tree/1306d9cbe7e5c83ea7661e5c26fc58c5be99d33c/M1/datasets">GitHub mirror used to download the same files</a><span class="desc">Telmo465/FEUP-PRI at commit 1306d9c (Git LFS objects with identical sha256 to two other mirrors).</span></li>
+        <li><a href="https://www.rottentomatoes.com/">Rotten Tomatoes</a><span class="desc">Original source of the critic reviews.</span></li>
+      </ul>
+    </section>
+    <section aria-labelledby="a11y"><h2 id="a11y">Accessibility</h2>
+      <ul class="res-list">
+        <li><a href="https://www.w3.org/TR/WCAG22/">WCAG 2.2</a><span class="desc">Web Content Accessibility Guidelines, the AA target for this site.</span></li>
+        <li><a href="https://www.w3.org/WAI/WCAG22/quickref/">How to meet WCAG 2.2 (quick reference)</a><span class="desc">Checklist used by the design and QA.</span></li>
+      </ul>
+    </section>
+    <h2 id="translation">Note on the template wording</h2>
+    <p>The project brief borrowed a product-review template ("brands and products", "battery life"). Here it is translated to film criticism: the spaCy EntityRuler labels studios, franchises and filmmaking technology (STUDIO, FRANCHISE, FILM_TECH) plus people and titles from the film metadata, and noun-chunk aspects are phrases like "visual effects", "sound design", "third act" and "lead performance".</p>
+  </div>
+</main>
+<footer class="site-footer">
+  <div class="wrap">
+    <nav aria-label="Footer">
+      <ul>
+        <li><a href="/resources.html">Resources &amp; documentation</a></li>
+        <li><a href="/methodology.html">Methodology &amp; evaluation</a></li>
+        <li><a href="https://github.com/animaze63-oss/NLPFinalpd">GitHub repository</a></li>
+        <li><a href="https://github.com/animaze63-oss/NLPFinalpd#readme">Step-by-step guide</a></li>
+      </ul>
+    </nav>
+    <p class="muted small">Review excerpts are written by the credited critics and publications and come from the
+      <a href="https://www.kaggle.com/datasets/stefanoleone992/rotten-tomatoes-movies-and-critic-reviews-dataset">Rotten Tomatoes movies and critic reviews dataset</a>
+      (Kaggle, CC0, scraped October 2020). NLTK and spaCy ran at build time on Netlify; the critique analyzer runs NLTK in your browser with Pyodide.</p>
+  </div>
+</footer>
+</body>
+</html>

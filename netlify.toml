@@ -1,0 +1,63 @@
+# Scifi Cinema Lens — Netlify configuration (owner: netlify-engineer).
+# Everything is static. Python runs ONLY during the build; no Functions, no Edge Functions.
+# Docs: https://docs.netlify.com/build/configure-builds/file-based-configuration/
+
+[build]
+  # Netlify auto-installs requirements.txt (base directory) with pip before this command.
+  # 1) NLTK data for the build, 2) NLTK + spaCy pipeline -> site/data/*.json,
+  # 3) self-host Pyodide 314.0.8 + nltk/regex wheels + browser NLTK data under site/.
+  command = "python -m nltk.downloader -d ./nltk_data punkt_tab stopwords vader_lexicon && NLTK_DATA=./nltk_data python pipeline/build_data.py && NLTK_DATA=./nltk_data python scripts/prepare_pyodide.py"
+  publish = "site"
+
+[build.environment]
+  PYTHON_VERSION = "3.12"
+  NLTK_DATA = "./nltk_data"
+
+# Deep links to a film are handled by the single-page dashboard.
+[[redirects]]
+  from = "/film/*"
+  to = "/index.html"
+  status = 200
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    Permissions-Policy = "camera=(), microphone=(), geolocation=()"
+    X-Frame-Options = "DENY"
+    # 'wasm-unsafe-eval' lets Pyodide compile WebAssembly; connect-src 'self' means the
+    # analyzer physically cannot send text to another origin.
+    Content-Security-Policy = "default-src 'self'; script-src 'self' 'wasm-unsafe-eval'; worker-src 'self'; connect-src 'self'; img-src 'self' data:; style-src 'self' 'unsafe-inline'; font-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'"
+
+[[headers]]
+  for = "/data/*"
+  [headers.values]
+    Cache-Control = "public, max-age=300, must-revalidate"
+
+[[headers]]
+  for = "/pyodide/*"
+  [headers.values]
+    # Path contains the Pyodide version (v314.0.8), so files never change at a given URL.
+    Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+  for = "/pyodide/*.wasm"
+  [headers.values]
+    Content-Type = "application/wasm"
+
+[[headers]]
+  for = "/nltk_data/*"
+  [headers.values]
+    Cache-Control = "public, max-age=86400"
+
+[[headers]]
+  for = "/py/*"
+  [headers.values]
+    Cache-Control = "public, max-age=300, must-revalidate"
+    Content-Type = "text/plain; charset=utf-8"
+
+[[headers]]
+  for = "/*.mjs"
+  [headers.values]
+    Content-Type = "text/javascript; charset=utf-8"
