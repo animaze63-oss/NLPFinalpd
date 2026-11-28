@@ -1,0 +1,383 @@
+{
+ "annotation": {
+  "annotator": "single annotator (the project's nlp-evaluator agent), not independently double-coded",
+  "note": "50 sentences drawn at random (seed 7) plus 12 drawn from sentences matching sound/music words (seed 11) so soundtrack has support; duplicates removed. Rule: label an aspect when the sentence evaluates or describes that part of the film (themes and ideas count as story, actors as characters, looks/sights/action staging as visuals).",
+  "source": "data/scifi_reviews.csv, NLTK sent_tokenize, 30-220 characters"
+ },
+ "items": [
+  {
+   "text": "As space operas go, this may yet be accounted one of the classics: dream material even.",
+   "aspects": [],
+   "draw": "random"
+  },
+  {
+   "text": "Blade Runner 2049 is, hands-down, the greatest sequel in the history of cinema.",
+   "aspects": [],
+   "draw": "random"
+  },
+  {
+   "text": "If you want to see stuff blowing up for two hours straight and don't care about a story or character development, then this is the movie for you.",
+   "aspects": [
+    "story",
+    "characters"
+   ],
+   "draw": "random"
+  },
+  {
+   "text": "Writer-director Alex Garland has made an atom bomb of a movie, fiery and all-consuming and quite unnatural.",
+   "aspects": [],
+   "draw": "random"
+  },
+  {
+   "text": "A spectacular work of science fiction that not only gets under your skin but it becomes part of it.",
+   "aspects": [],
+   "draw": "random"
+  },
+  {
+   "text": "The film's greatest sin is its intrinsic dullness.",
+   "aspects": [],
+   "draw": "random"
+  },
+  {
+   "text": "Given that personal trauma is the prevailing throughline of Denis Villeneuve's filmmaking career so far, it's no surprise to find Arrival anchored by a familiar narrative motif.",
+   "aspects": [
+    "story"
+   ],
+   "draw": "random"
+  },
+  {
+   "text": "About 90 minutes in ... my dazzlement sank into something like horror: What if the wasteland rage of Fury Road is the only feeling studio movies of the future bother to stir in us?",
+   "aspects": [],
+   "draw": "random"
+  },
+  {
+   "text": "The Martian never loses sight of the fact that it is about a supreme test of will and intelligence and human triumph.",
+   "aspects": [
+    "story"
+   ],
+   "draw": "random"
+  },
+  {
+   "text": "\"Annihilation\" is a strong sophomore effort from a very talented filmmaker.",
+   "aspects": [],
+   "draw": "random"
+  },
+  {
+   "text": "It's a clever enough conceit, doomed by a bungled meet cute.",
+   "aspects": [
+    "story"
+   ],
+   "draw": "random"
+  },
+  {
+   "text": "It almost feels like it's some sort of fable...but if that's the case...then it's so heavy-handed, you would need an exoskeleton to lift your hands.",
+   "aspects": [
+    "story"
+   ],
+   "draw": "random"
+  },
+  {
+   "text": "Alien is one of those instances.",
+   "aspects": [],
+   "draw": "random"
+  },
+  {
+   "text": "Annihilation is a puff from one of the year's most cataclysmically up-tempo strains of synthetic sci-fi devastation.",
+   "aspects": [],
+   "draw": "random"
+  },
+  {
+   "text": "I must admit, for all its blatant flaws (and man are there some), I left feeling shockingly satisfied, almost wanting to get right back in line and see it again.",
+   "aspects": [],
+   "draw": "random"
+  },
+  {
+   "text": "The Matrix is one dandy piece of eye candy, even if the taste is a little flat.",
+   "aspects": [
+    "visuals"
+   ],
+   "draw": "random"
+  },
+  {
+   "text": "What's impressive is Annihilation's willingness and ability to evoke the soul-sickness that leads to great moments of art, great moments of self-destruction, and an equation of the two.",
+   "aspects": [],
+   "draw": "random"
+  },
+  {
+   "text": "\"Ex Machina\" is a smart, exceptionally stylish head trip.",
+   "aspects": [],
+   "draw": "random"
+  },
+  {
+   "text": "A film of rare vision and beauty, Arrival is easily the most intelligent blockbuster released this year-and maybe any year.",
+   "aspects": [],
+   "draw": "random"
+  },
+  {
+   "text": "The Martian is a science fiction popcorn movie that is destined to be a genuine crowd pleaser.",
+   "aspects": [],
+   "draw": "random"
+  },
+  {
+   "text": "It's not bad, but it definitely takes a back seat to the astounding visuals.",
+   "aspects": [
+    "visuals"
+   ],
+   "draw": "random"
+  },
+  {
+   "text": "Equal parts spectacle and mindf*ck, Annihilation embraces visual storytelling and non-literal storytelling in a lean, sci-fi classic.",
+   "aspects": [
+    "visuals",
+    "story"
+   ],
+   "draw": "random"
+  },
+  {
+   "text": "Ridley Scott has delivered his best film since 'Gladiator'.",
+   "aspects": [],
+   "draw": "random"
+  },
+  {
+   "text": "than Invasion of the Saucer Men.",
+   "aspects": [],
+   "draw": "random"
+  },
+  {
+   "text": "The script's flaws, the film's murky look, the incoherent fight scenes...and Jodie Foster's incongruous accent...make it difficult to care.",
+   "aspects": [
+    "story",
+    "visuals",
+    "characters"
+   ],
+   "draw": "random"
+  },
+  {
+   "text": "Valerian is an imaginative, lavish visual feast.",
+   "aspects": [
+    "visuals"
+   ],
+   "draw": "random"
+  },
+  {
+   "text": "Too bad the visuals weren't tethered to something more solid.",
+   "aspects": [
+    "visuals"
+   ],
+   "draw": "random"
+  },
+  {
+   "text": "But its challenging conclusion could be a hard sell.",
+   "aspects": [
+    "story"
+   ],
+   "draw": "random"
+  },
+  {
+   "text": "Bringing optimism, nerd-itude and a touch of crazy to his character's solo ordeal -- at one point, scraggly Watney calls himself a \"space pirate\" -- Damon is the key to the movie's exuberance.",
+   "aspects": [
+    "characters"
+   ],
+   "draw": "random"
+  },
+  {
+   "text": "The Martian is a crowdpleaser, hopefully one that may inspire the next generation of space explorations.",
+   "aspects": [],
+   "draw": "random"
+  },
+  {
+   "text": "It's hard to do justice in words to Fury Road's nonstop, breathtaking action sequences.",
+   "aspects": [
+    "visuals"
+   ],
+   "draw": "random"
+  },
+  {
+   "text": "A color-blasted head trip laden with gasp-worthy sights that also carries out the essential sci-fi mission of making us consider what it means to be human in a modern world.",
+   "aspects": [
+    "visuals"
+   ],
+   "draw": "random"
+  },
+  {
+   "text": "Damon once again shows why he is one of the best lead actors we have.",
+   "aspects": [
+    "characters"
+   ],
+   "draw": "random"
+  },
+  {
+   "text": "Able to generate dread and awe with equal skill, \"Annihilation\" is an absorbing amalgam of genres and influences.",
+   "aspects": [],
+   "draw": "random"
+  },
+  {
+   "text": "The Martian is for folks who like their science-fiction stories to possess as much science as fiction.",
+   "aspects": [],
+   "draw": "random"
+  },
+  {
+   "text": "Adams is the centerpiece in a film full of wonder and discovery.",
+   "aspects": [
+    "characters"
+   ],
+   "draw": "random"
+  },
+  {
+   "text": "A mediocre movie that's as beautiful as it is #problematic.",
+   "aspects": [
+    "visuals"
+   ],
+   "draw": "random"
+  },
+  {
+   "text": "Something that must be seen to be believed; a visionary achievement in filmmaking that delights the eye and the mind alike.",
+   "aspects": [
+    "visuals"
+   ],
+   "draw": "random"
+  },
+  {
+   "text": "A brilliant new sci-fi benchmark, an epic movie yardstick against which future science fiction flicks will be compared and measured--it's the 2001 of 2017.",
+   "aspects": [],
+   "draw": "random"
+  },
+  {
+   "text": "Watch it for its stars but it won't have an astronomical impact on you.",
+   "aspects": [
+    "characters"
+   ],
+   "draw": "random"
+  },
+  {
+   "text": "Unlike most films of this ilk, it rejects the notion that life is tragic simply because it inevitably ends in death.",
+   "aspects": [
+    "story"
+   ],
+   "draw": "random"
+  },
+  {
+   "text": "It's exciting, emotional, it has great storytelling and most of all, it's surprising!",
+   "aspects": [
+    "story"
+   ],
+   "draw": "random"
+  },
+  {
+   "text": "A deep concept that vanishes in Hollywood's ambition to carve out a franchise.",
+   "aspects": [
+    "story"
+   ],
+   "draw": "random"
+  },
+  {
+   "text": "This is Scott's most enjoyable movie in light years ..",
+   "aspects": [],
+   "draw": "random"
+  },
+  {
+   "text": "The swelled up expectations and anticipation behind the first film loomed over this sequel.",
+   "aspects": [],
+   "draw": "random"
+  },
+  {
+   "text": "Arrival is the latest in a long line of \"first contact\" sci-fi stories, and yet regardless of its familiar premise, its achievements are unique.",
+   "aspects": [
+    "story"
+   ],
+   "draw": "random"
+  },
+  {
+   "text": "It's the nearest most of us will get to feeling like we've lived on Mars for an eternity.",
+   "aspects": [],
+   "draw": "random"
+  },
+  {
+   "text": "For all the visual flair and incredible talents of it's director, \"Elysium\" just wouldn't allow me to get past the message it continues to preach over and over again.",
+   "aspects": [
+    "visuals",
+    "story"
+   ],
+   "draw": "random"
+  },
+  {
+   "text": "Miller has crafted the kind of visionary action epic that makes peers and contemporaries envious while holding audiences in rapture waiting for that first bit of silence when they can finally relinquish their breath.",
+   "aspects": [],
+   "draw": "random"
+  },
+  {
+   "text": "In the eyes of Arrival, language can do more than connect disparate peoples, but change our very perspective on everything.",
+   "aspects": [
+    "story"
+   ],
+   "draw": "random"
+  },
+  {
+   "text": "If we weren't so appalled, we'd be bored to tears.",
+   "aspects": [],
+   "draw": "targeted-sound"
+  },
+  {
+   "text": "The answer is that you really wouldn't want 90 years of it, not when an hour and 56 minutes seems too long.",
+   "aspects": [
+    "story"
+   ],
+   "draw": "targeted-sound"
+  },
+  {
+   "text": "Years in the making, Ghost in the Shell is an expensive, carefully calculated, corporate version of a manga that was anything but.",
+   "aspects": [],
+   "draw": "targeted-sound"
+  },
+  {
+   "text": "A two-hour flatline, best experienced in the form of its trailers or its soundtrack or anything but the film itself.",
+   "aspects": [
+    "soundtrack"
+   ],
+   "draw": "targeted-sound"
+  },
+  {
+   "text": "The film rises and falls on Lawrence and Pratt, two people we wouldn't mind spending 90 years trapped on a starship with.",
+   "aspects": [
+    "characters"
+   ],
+   "draw": "targeted-sound"
+  },
+  {
+   "text": "A roller-coaster for the mind and spirit... Twenty years from now we may think of it as a classic, even if it takes a bit of time for it to sink in.",
+   "aspects": [],
+   "draw": "targeted-sound"
+  },
+  {
+   "text": "There have also been digital restorations and improvements to the original film's negative and sound mix, but the best thing about this rerelease is simply the opportunity to see the awesome Alien in theatres again.",
+   "aspects": [
+    "soundtrack"
+   ],
+   "draw": "targeted-sound"
+  },
+  {
+   "text": "It is depressing to watch an expensive, crafty movie that never soars beyond its cold desire to score the big bucks.",
+   "aspects": [],
+   "draw": "targeted-sound"
+  },
+  {
+   "text": "This is a thoughtful movie that's interesting now and will probably still be interesting in 100 years, whichever way things go.",
+   "aspects": [],
+   "draw": "targeted-sound"
+  },
+  {
+   "text": "And don't let Hans Zimmer do the music.",
+   "aspects": [
+    "soundtrack"
+   ],
+   "draw": "targeted-sound"
+  },
+  {
+   "text": "It's frustrating because there's so much to look at, so much money well spent in every frame, but \"Interstellar\" wears out its audience long before it ends.",
+   "aspects": [
+    "visuals"
+   ],
+   "draw": "targeted-sound"
+  }
+ ]
+}
