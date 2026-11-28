@@ -220,6 +220,7 @@ h1[tabindex="-1"]:focus:not(:focus-visible) { outline: none; }
 .heatmap { border-collapse: separate; border-spacing: 3px; width: 100%; font-variant-numeric: tabular-nums; }
 .heatmap th { text-align: left; font-size: 0.82rem; padding: 0.3rem 0.4rem; }
 .heatmap thead th { color: var(--muted); font-weight: 600; }
-.heatmap td.heat { padding: 0.45rem 0.5rem; border-radius: 6px; color: var(--text); font-weight: 700; font-size: 0.85rem; white-space: nowrap; border: 1px solid var(--border); }
+.heatmap td.heat { padding: 0.35rem 0.4rem; text-align: center; border-radius: 6px; color: var(--text); font-weight: 700; font-size: 0.85rem; white-space: nowrap; border: 1px solid var(--border); }
 .heatmap td.na { color: var(--muted); font-weight: 400; text-align: center; }
-.heatmap .heat-n { font-weight: 400; color: var(--text); opacity: 0.85; font-size: 0.75rem; }
+.heatmap .heat-n { display: block; font-weight: 400; color: var(--text); opacity: 0.85; font-size: 0.72rem; }
+.heatmap th[scope="row"] { min-width: 6.5rem; }
